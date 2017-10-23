@@ -61,7 +61,7 @@ function setTimeoutHelper(callback, delay)
 		}
 		return true;
 	};
-	// Функция перезапуска таймера
+	// Функция восстановления таймера
 	that.resume = function(func)
 	{
 		// Если паузы не было
@@ -90,6 +90,25 @@ function setTimeoutHelper(callback, delay)
 		}
 		return true;
 	};
+	// Перезапуск таймера
+	that.reset = function(func)
+	{
+		// Если статусы запуска и перезапуска false
+		if(!status.start && !status.resume)
+		{
+			return false;
+		}
+		// Останавливаем интервал
+		that.stop();
+		// Перезапускаем интервал
+		startFunc();
+		// Если была передана функция
+		if(typeof func === 'function')
+		{
+			// Вызаваем функцию
+			func.call();
+		}
+	}
 	// Функция старта таймера
 	var startFunc = function()
 	{
